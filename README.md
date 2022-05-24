@@ -12,6 +12,11 @@ The following folder hierarchy convention is to be used for sub-projects within 
 +-- Content
 |   +-- Common
 |   +-- [ProjectName]
+|   |   +-- [SubProjectName]
 ```
 
 where each sub-project is ideally a mostly-self-contained project that can make use of any Common or submodule assets.
+
+## Projects
+
+- [Unreal Engine 5 Beginner Tutorial - UE5 Starter Course!](./Content/StarterCourse/README.md)
