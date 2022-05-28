@@ -14,7 +14,7 @@ https://www.youtube.com/watch?v=gQmiqmxJMtA
 
 ### Typical Project Structure
 
-Based on the UE5 starter content.
+Based on the UE5 starter content, and other examples.
 
 ```txt
 +-- Content
@@ -24,11 +24,18 @@ Based on the UE5 starter content.
 |   |   +-- HDRI
 |   |   +-- Maps
 |   |   +-- Materials
+|   |   +-- Meshes
 |   |   +-- Particles
-|   |   +-- Props
-|   |   +-- Shapes
 |   |   +-- Textures
 ```
+
+### Useful Keyboard Shortcuts
+
+- `End`: Snaps an object to a surface.
+
+- `Ctrl+E`: Opens object for editing.
+- `Ctrl+Space`: Opens content drawer.
+
 
 ### Unreal Concepts
 
@@ -65,4 +72,14 @@ Based on the UE5 starter content.
 > If an OpenGL map is used, shadow direction will be inverted.
 > Fix by inspecting the normal map, and toggling "Flip Green Channel".
 
-See sub-project: MaterialTest.
+> **Imports**
+>
+> For **normal maps**, **metallic maps**, and **roughness maps** ensure the sRGB flag is disabled. This is because each channel is a separate mask, and these files are not supposed to be read as combined RGB.
+
+### Static Meshes
+
+- May not have materials assigned by default. To assign, open in the mesh view and directly assign the materials to the mesh.
+
+### Lighting
+
+Lumen - Allows global illumination (light bouncing) in real-time. This avoids having to do light-baking, and gives us far more dynamic scene lighting.
