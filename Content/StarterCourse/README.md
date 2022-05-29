@@ -83,3 +83,27 @@ Based on the UE5 starter content, and other examples.
 ### Lighting
 
 Lumen - Allows global illumination (light bouncing) in real-time. This avoids having to do light-baking, and gives us far more dynamic scene lighting.
+
+**GI in UE4**: Generated a static light map.
+
+- Set light source to Mobility:static.
+- Buid > Build All Levels to build lighting.
+
+**GI in UE5**: Lumen
+
+- World Settings > Lightmass > Force No Precomputed Lighting: true
+- Rebuild
+- Enable Lumen within a PostProcessVolume:
+  - Global Illumination > Method > Lumen
+  - Reflections > Method > Lumen
+
+**Components**
+
+- Skylight: captures an image of the scene and projects it as a lightsource. Acts like a dynamic HDRI image.
+  - To realistically light an outdoor scene, combine this with a SkyAtmoshere component and DirectionalLight, with the following settings to achieve a natural ambient ligtning based on the scene atmosphere.
+    - SkyLight:
+      - Light > Real Time Capture
+      - Mobility > Moveable
+    - Direcional Light:
+      - Atmosphere and Cloud > Atmosphere Sun Light: true
+
