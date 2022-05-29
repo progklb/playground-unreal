@@ -8,7 +8,12 @@ https://www.youtube.com/watch?v=gQmiqmxJMtA
 
 ## Sub-projects
 
-- MaterialTest: Demonstrating creation of materials using the material node editor.
+- **MaterialTest**: Demonstrates creation of materials using the material node editor. A master material has been created, with a derived material instances. A static mesh (crate) as also been configured.
+
+- **LightingTest**: Demonstrates lighting in a scene using Lumen. The coloured walls allow us to see the bounce lighting behaviour.
+
+- **LightingExample**:
+  - Maps/ArchVizRoom: Showcases a near-default setup of components for realistic lighting.
 
 ## Notes
 
@@ -76,13 +81,19 @@ Based on the UE5 starter content, and other examples.
 >
 > For **normal maps**, **metallic maps**, and **roughness maps** ensure the sRGB flag is disabled. This is because each channel is a separate mask, and these files are not supposed to be read as combined RGB.
 
+> See project: MaterialTest
+
 ### Static Meshes
 
 - May not have materials assigned by default. To assign, open in the mesh view and directly assign the materials to the mesh.
 
 ### Lighting
 
+> Note that there are separate settings between edit mode and play mode. If the lighting doesn't look right in either mode, or each mode looks different, check your auto exposure settings for each mode.
+
 Lumen - Allows global illumination (light bouncing) in real-time. This avoids having to do light-baking, and gives us far more dynamic scene lighting.
+
+> Baked lighting is always better quality though and cheaper, so if lights/objects are static rather use baking.
 
 **GI in UE4**: Generated a static light map.
 
@@ -96,14 +107,35 @@ Lumen - Allows global illumination (light bouncing) in real-time. This avoids ha
 - Enable Lumen within a PostProcessVolume:
   - Global Illumination > Method > Lumen
   - Reflections > Method > Lumen
+- "Final Gather Quality" affects lighting quality. Lower values are noisier, but less expensive.
 
 **Components**
 
-- Skylight: captures an image of the scene and projects it as a lightsource. Acts like a dynamic HDRI image.
-  - To realistically light an outdoor scene, combine this with a SkyAtmoshere component and DirectionalLight, with the following settings to achieve a natural ambient ligtning based on the scene atmosphere.
-    - SkyLight:
+- `Skylight`: captures an image of the scene and projects it as a lightsource. Acts like a dynamic HDRI image.
+  - To realistically light an outdoor scene, combine this with a `SkyAtmoshere` component and `DirectionalLight`, with the following settings to achieve a natural ambient ligtning based on the scene atmosphere.
+    - `SkyLight`:
       - Light > Real Time Capture
       - Mobility > Moveable
-    - Direcional Light:
+    - `Direcional Light`:
       - Atmosphere and Cloud > Atmosphere Sun Light: true
 
+> Note that a `SkyAtmoshphere` will only render a sky from the horizon upward. To get rid of the black zone below the horizon, add an `ExponentialHeightFog`.
+
+> Note that if a light does not point toward an indoor spac (e.g. a directional light does not point towards a window) that space will be pitch black.
+
+**Making a convincing scene:**
+
+- Add `DirectionalLight`.
+  - Set Atmosphere Sun Light > true.
+- Add `SkyAtmosphere`. 
+- Add `ExponentialHeightFog`.
+  - Consider adjusting Start Distance so that the playable area doesn't have fog in it.
+- Add `SkyLight`
+  - Set Mobility > Moveable
+  - Set Light > Real Time Capture
+  - Adjust Intensity Scale to change brightness
+- Add `PostProcessingVolume`
+  - Set Infinite Extent (Unbound) > true
+  - Set Lumen Global Illumination > Final Gather Quality > Max value
+
+> See project: LightingExample/ArchVizRoom
